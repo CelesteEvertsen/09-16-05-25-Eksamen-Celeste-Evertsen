@@ -13,8 +13,10 @@ const matchUser = allUsers.find((user) =>
 );
 
 if(matchUser){
+    localStorage.setItem("Username",JSON.stringify(matchUser));
     window.location.href ="/datingSite.html"
     console.log("Vellykket",matchUser)
+    
 }else{
     alert("Brukernavn eller Passord er feil")
     console.log("ikke Vellykket")

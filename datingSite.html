@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
@@ -16,10 +16,19 @@
       crossorigin="anonymous"
     />
     <title>Dating Side</title>
-</head>
-<body>
-    <h1>Velkommen til din Profil</h1>
+  </head>
+  <body>
+    <div id="welcome-user"></div>
+    <button id="edit-your-info" type="button">Rediger info</button>
+
+    <div>
+      <button id="getFemaleBtn" type="button">Kvinner</button>
+      <div id="female-container"></div>
+    </div>
+    
 
     <script type="module" src="/Js/datingSite.js"></script>
-</body>
+    <script type="module" src="/Request/PUT.js"></script>
+    <script type="module" src="/Request/GET.js"></script>
+  </body>
 </html>
