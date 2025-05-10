@@ -1,30 +1,25 @@
-
 let counterText;
 let likedUsers = JSON.parse(localStorage.getItem("likedUsersMale")) || [];
-let counter = parseInt(localStorage.getItem("likedCounterMale")) || 0
+let counter = parseInt(localStorage.getItem("likedCounterMale")) || 0;
 
-const maksLikes = 10; // makst tilgjengelige likes
+const maxLikes = 10; // makst tilgjengelige likes
 
 const maleLikeBtn = document.createElement("button");
 
-function updateButtons(){
-    const maleDislikes = document.createElement("button");
-    maleLikeBtn.disabled = counter >= maksLikes;
-    maleDislikes.disabled = counter <= 0;
-   
+function updateButtons() {
+  const maleDislikes = document.createElement("button");
+  maleLikeBtn.disabled = counter >= maxLikes;
+  maleDislikes.disabled = counter <= 0;
 }
 
 // Funksjon displaye fra localStorage til Browser.
 const getFromStorage = JSON.parse(localStorage.getItem("likedUsersMale")) || [];
 
-function displayFromLocalStorage(maleFromLocal){
- const likedContainer = document.getElementById("male-liked-container");
- likedContainer.innerHTML="";
+function displayFromLocalStorage(maleFromLocal) {
+  const likedContainer = document.getElementById("male-liked-container");
+  likedContainer.innerHTML = "";
 
- 
-
- maleFromLocal.forEach((maleUsers, index) => {
-    
+  maleFromLocal.forEach((maleUsers, index) => {
     //lager kort for å sette sammen informasjon til brukeren.
     const maleCard = document.createElement("div");
     maleCard.classList.add("male-user-card");
@@ -42,7 +37,7 @@ function displayFromLocalStorage(maleFromLocal){
         <p>Alder: ${maleUsers.dob.age} Kjønn: ${maleUsers.gender}</p>
         <p>By: ${maleUsers.location.city}</p>
         <p>Land: ${maleUsers.location.country}</p>
-    `
+    `;
 
     const maledislikeBtn = document.createElement("button");
     maledislikeBtn.textContent = "Dislike";
@@ -53,84 +48,95 @@ function displayFromLocalStorage(maleFromLocal){
     maledislikeBtn.style.padding = "0.5rem 1rem";
     maledislikeBtn.style.borderRadius = "5px";
 
-    maledislikeBtn.addEventListener("click",()=>{
-        const currentData = JSON.parse(localStorage.getItem("likedUsersMale"))||[];
-        currentData.splice(index,1);
-        localStorage.setItem("likedUsersMale", JSON.stringify(currentData))
+    maledislikeBtn.addEventListener("click", () => {
+      const currentData =
+        JSON.parse(localStorage.getItem("likedUsersMale")) || [];
+      currentData.splice(index, 1);
+      localStorage.setItem("likedUsersMale", JSON.stringify(currentData));
 
-        if(counter > 0){
-            counter--;
-            localStorage.setItem("likedCounterMale", counter);
-        }
-        likedUsers = currentData; //oppdaterer den globale listen
-        displayFromLocalStorage(currentData)
-            updateButtons();
+      if (counter > 0) {
+        counter--;
+        localStorage.setItem("likedCounterMale", counter);
+      }
+      likedUsers = currentData; //oppdaterer den globale listen
+      displayFromLocalStorage(currentData);
+      updateButtons();
     });
     maleCard.append(maledislikeBtn);
-    likedContainer.append(maleCard)
- })
+    likedContainer.append(maleCard);
+  });
 }
-
-
-
 
 // Lager en Funksjon som viser MaleUser i NettLeseren
 export function displayMaleUsers(users, bgColor) {
-    const maleContainer = document.getElementById("male-container");
-    maleContainer.innerHTML = ""; // Tømmer innholdet i containeren
-  
-    users.forEach((user) => {
-      const userCard = document.createElement("div");
-      userCard.classList.add("user-card");
-  
-      userCard.style.border = "1px solid #ccc";
-      userCard.style.padding = "1rem";
-      userCard.style.marginBottom = "1rem";
-      userCard.style.borderRadius = "10px";
-      userCard.style.background = bgColor; // denne er satt inn som ett parameter i displayUser, også kaller vi på den i eventlistener
-  
-      userCard.innerHTML = `
+  const maleContainer = document.getElementById("male-container");
+  maleContainer.innerHTML = ""; // Tømmer innholdet i containeren
+
+  const removeMale = document.createElement("button");
+  removeMale.type = "button";
+  removeMale.classList.add("btn", "btn-danger");
+  removeMale.style.marginTop = "10px";
+  removeMale.style.marginBottom = "10px";
+  removeMale.textContent = "ikke vis Menn";
+
+  users.forEach((user) => {
+    const userCard = document.createElement("div");
+    userCard.classList.add("user-card");
+
+    userCard.style.border = "1px solid #ccc";
+    userCard.style.padding = "1rem";
+    userCard.style.marginBottom = "1rem";
+    userCard.style.borderRadius = "10px";
+    userCard.style.background = bgColor; // denne er satt inn som ett parameter i displayUser, også kaller vi på den i eventlistener
+
+    userCard.innerHTML = `
           <img src="${user.picture.large}">
           <h2> ${user.name.title} ${user.name.first}, ${user.name.last} </h2>
           <p>Alder: ${user.dob.age} Kjønn: ${user.gender}</p>
           <p>By: ${user.location.city}</p>
           <p>Land: ${user.location.country}</p>
           `;
-        counterText = document.createElement("p");
-        counterText.textContent = `${counter}/${maksLikes} dine Likes`;
-        userCard.append(counterText);
+    counterText = document.createElement("p");
+    counterText.textContent = `${counter}/${maxLikes} dine Likes`;
+    userCard.append(counterText);
 
+    const maleLikeBtn = document.createElement("button");
+    maleLikeBtn.textContent = "Ja, jeg liker deg";
+    maleLikeBtn.style.marginTop = "10px";
+    maleLikeBtn.style.backgroundColor = "white";
+    maleLikeBtn.style.border = "none";
+    maleLikeBtn.style.padding = "0.5rem 1rem";
+    maleLikeBtn.style.borderRadius = "5px";
 
-        const maleLikeBtn = document.createElement("button"); 
-        maleLikeBtn.textContent = "Like";
-        maleLikeBtn.style.marginTop = "10px";
-        maleLikeBtn.style.backgroundColor = "white";
-        maleLikeBtn.style.border = "none";
-        maleLikeBtn.style.padding = "0.5rem 1rem";
-        maleLikeBtn.style.borderRadius = "5px";
+    maleLikeBtn.addEventListener("click", () => {
+      if (counter < maxLikes) {
+        counter++;
+        likedUsers.push(user);
 
-        
-        maleLikeBtn.addEventListener("click", ()=>{
-        if(counter < maksLikes){
-            counter++;
-            likedUsers.push(user);
+        localStorage.setItem("likedUsersMale", JSON.stringify(likedUsers));
+        localStorage.setItem("likedCounterMale", counter);
 
-            localStorage.setItem("likedUsersMale", JSON.stringify(likedUsers));
-            localStorage.setItem("likedCounterMale",counter);
+        displayFromLocalStorage(likedUsers);
+      } else if (counter === maxLikes) {
+        alert("Du har brukt alle dinne Manne likes");
+      }
 
-            displayFromLocalStorage(likedUsers)
-        }else if (counter === maksLikes){
-            alert ("Du har brukt alle dinne Manne likes")
-        }
-
-        console.log("Like menn")
-        updateButtons();
- })
-     userCard.append(maleLikeBtn)
-      maleContainer.append(userCard);
+      console.log("Like menn");
+      updateButtons();
     });
-   
-  };
+    userCard.append(maleLikeBtn);
+    maleContainer.append(userCard);
+  });
+  maleContainer.prepend(removeMale);
 
-  displayFromLocalStorage(getFromStorage);
-  updateButtons()
+  removeMale.addEventListener("click", () => {
+    maleContainer.innerHTML = "";
+    localStorage.removeItem("lastMaleUser","false");
+    const MaleBtn = document.getElementById("getMaleBtn");
+    MaleBtn.textContent = "Menn";
+  });
+   
+}
+
+displayFromLocalStorage(getFromStorage);
+updateButtons();

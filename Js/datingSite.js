@@ -162,6 +162,10 @@ export function displayFemaleUsers(users) {
         <p>By: ${user.location.city}</p>
         `;
 
+        counterText = document.createElement("p");
+        counterText.textContent = `${counter}/${maxLike} dine Likes`;
+        userCards.append(counterText);
+
     const likeBtn = document.createElement("button");
       likeBtn.textContent = "Ja, jeg liker deg";
       likeBtn.style.marginTop = "10px";

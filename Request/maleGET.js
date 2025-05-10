@@ -15,10 +15,23 @@ maleBtn.addEventListener("click", async function(e){
             maleUser = maleUser.concat(data); 
             console.log("Henter Mann", data);
             displayMaleUsers(data, "lightblue") 
-           
+           localStorage.setItem("lastMaleUser",JSON.stringify(data[0]));
            
     }catch(error){
         console.error("Ikke mulig å hente MEnn",error)
     }
-    maleBtn.textContent = "Neste Mann";
+    maleBtn.textContent = "Nei/Neste Mann";
+    localStorage.setItem("maleBtnClicked", "true")
+});
+
+document.addEventListener("DOMContentLoaded", async ()=> {
+ const btnMaleClicked = localStorage.getItem("maleBtnClicked");
+ const lastMaleUser = localStorage.getItem("lastMaleUser");
+ if (btnMaleClicked && lastMaleUser){
+    const maleUser = JSON.parse(lastMaleUser);
+    displayMaleUsers([maleUser], "lightblue");
+    maleBtn.textContent = "Nei/Neste kvinne";
+    console.log("Henter Kvinner fra LocalStorage", maleUser);
+ }
+
 });
