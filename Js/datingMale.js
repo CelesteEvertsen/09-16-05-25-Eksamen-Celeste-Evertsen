@@ -1,3 +1,4 @@
+import { likecounter } from "./datingSite.js";
 let counterText;
 let likedUsers = JSON.parse(localStorage.getItem("likedUsersMale")) || [];
 let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
@@ -20,7 +21,6 @@ function displayFromLocalStorage(maleFromLocal) {
   likedContainer.innerHTML = "";
 
   maleFromLocal.forEach((maleUsers, index) => {
-    //lager kort for å sette sammen informasjon til brukeren.
     const maleCard = document.createElement("div");
     maleCard.classList.add("male-user-card");
 
@@ -58,7 +58,7 @@ function displayFromLocalStorage(maleFromLocal) {
         counter--;
         localStorage.setItem("likeCounter", counter);
       }
-      likedUsers = currentData; //oppdaterer den globale listen
+      likedUsers = currentData; 
       displayFromLocalStorage(currentData);
       updateButtons();
     });
@@ -70,7 +70,7 @@ function displayFromLocalStorage(maleFromLocal) {
 // Lager en Funksjon som viser MaleUser i NettLeseren
 export function displayMaleUsers(users, bgColor) {
   const maleContainer = document.getElementById("male-container");
-  maleContainer.innerHTML = ""; // Tømmer innholdet i containeren
+  maleContainer.innerHTML = ""; 
 
   const removeMale = document.createElement("button");
   removeMale.type = "button";
@@ -87,7 +87,7 @@ export function displayMaleUsers(users, bgColor) {
     userCard.style.padding = "1rem";
     userCard.style.marginBottom = "1rem";
     userCard.style.borderRadius = "10px";
-    userCard.style.background = bgColor; // denne er satt inn som ett parameter i displayUser, også kaller vi på den i eventlistener
+    userCard.style.background = bgColor; 
 
     userCard.innerHTML = `
           <img src="${user.picture.large}">
@@ -96,9 +96,6 @@ export function displayMaleUsers(users, bgColor) {
           <p>By: ${user.location.city}</p>
           <p>Land: ${user.location.country}</p>
           `;
-    counterText = document.createElement("p");
-    counterText.textContent = `${counter}/${maxLikes} dine Likes`;
-    userCard.append(counterText);
 
     const maleLikeBtn = document.createElement("button");
     maleLikeBtn.textContent = "Ja, jeg liker deg";
@@ -117,6 +114,7 @@ export function displayMaleUsers(users, bgColor) {
         localStorage.setItem("likeCounter", counter);
 
         displayFromLocalStorage(likedUsers);
+        location.reload()
       } else if (counter === maxLikes) {
         alert("Du har brukt alle dinne Manne likes");
       }
@@ -140,3 +138,4 @@ export function displayMaleUsers(users, bgColor) {
 
 displayFromLocalStorage(getFromStorage);
 updateButtons();
+likecounter();

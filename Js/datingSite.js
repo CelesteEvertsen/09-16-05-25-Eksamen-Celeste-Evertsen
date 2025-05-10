@@ -1,23 +1,21 @@
 import { putEditUser } from "../Request/PUT.js";
-import {postLikedUsers} from "../Request/POST.js"
-
+import { postLikedUsers } from "../Request/POST.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    
-    showUserInHeader();
-    femaleFromLocal(getFromLocalStorge);
+  showUserInHeader();
+  femaleFromLocal(getFromLocalStorge);
 });
 
 function showUserInHeader() {
   const welcomeUserName = document.getElementById("welcome-user");
   const useInfo = JSON.parse(localStorage.getItem("Username"));
   const yourName = document.createElement("p");
-  
+
   if (useInfo && useInfo.userName) {
     yourName.textContent = `Velkommen til Profilen din ${useInfo.userName}`;
     welcomeUserName.prepend(yourName);
   }
-  
+
   const editBtn = document.getElementById("edit");
   editBtn.addEventListener("click", () => {
     const input = document.createElement("input");
@@ -53,11 +51,7 @@ function showUserInHeader() {
     });
     welcomeUserName.append(input, editPassword, saveBtn);
   });
-
 }
-   
-
-
 
 let counterText;
 let likedUsers = JSON.parse(localStorage.getItem("likedUsers")) || [];
@@ -65,10 +59,9 @@ let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 
 const maxLike = 10;
 
-
-// tillegg funkjsonalitet
+// tillegg funkjsonalitet, teller antal likes
 function updateButtons() {
-const likeBtn = document.createElement("button");
+  const likeBtn = document.createElement("button");
   const removeLikes = document.createElement("button");
   likeBtn.disabled = counter >= maxLike;
   removeLikes.disabled = counter <= 0;
@@ -79,7 +72,7 @@ const likeBtn = document.createElement("button");
 
 const getFromLocalStorge = JSON.parse(localStorage.getItem("likedUsers")) || [];
 
-export function femaleFromLocal(localUser) {
+ function femaleFromLocal(localUser) {
   const likeContainer = document.getElementById("liked-container");
   likeContainer.innerHTML = "";
 
@@ -120,9 +113,8 @@ export function femaleFromLocal(localUser) {
         localStorage.setItem("likeCounter", counter);
       }
       likedUsers = currentData;
-      femaleFromLocal(currentData);
+      femaleFromLocal(currentData); 
       updateButtons();
-      
     });
     userCard.append(dislikeBtn);
     likeContainer.append(userCard);
@@ -132,77 +124,78 @@ export function femaleFromLocal(localUser) {
 // Vise Kvinner
 
 export function displayFemaleUsers(users) {
- 
   const femaleContainer = document.getElementById("female-container");
   femaleContainer.innerHTML = "";
 
   const removeFemale = document.createElement("button");
   removeFemale.type = "button";
-  removeFemale.classList.add("btn","btn-danger")
+  removeFemale.classList.add("btn", "btn-danger");
   removeFemale.style.marginTop = "10px";
   removeFemale.style.marginBottom = "10px";
   removeFemale.textContent = "ikke vis kvinner";
 
-  
-    
-    users.forEach((user) => {
-      const userCards = document.createElement("div");
-      userCards.classList.add("femaleCard");
+  users.forEach((user) => {
+    const userCards = document.createElement("div");
+    userCards.classList.add("femaleCard");
 
-      userCards.style.border = "1px solid #ccc";
-      userCards.style.padding = "1rem";
-      userCards.style.marginBottom = "1rem";
-      userCards.style.borderRadius = "10px";
-      userCards.style.background = "lightpink";
+    userCards.style.border = "1px solid #ccc";
+    userCards.style.padding = "1rem";
+    userCards.style.marginBottom = "1rem";
+    userCards.style.borderRadius = "10px";
+    userCards.style.background = "lightpink";
 
-      userCards.innerHTML = `
+    userCards.innerHTML = `
         <img src="${user.picture.large}">
         <h2>${user.name.first} ${user.name.last}</h2>
         <p>Alder: ${user.dob.age}
         <p>By: ${user.location.city}</p>
         `;
 
-        counterText = document.createElement("p");
-        counterText.textContent = `${counter}/${maxLike} dine Likes`;
-        userCards.append(counterText);
+    
 
     const likeBtn = document.createElement("button");
-      likeBtn.textContent = "Ja, jeg liker deg";
-      likeBtn.style.marginTop = "10px";
-      likeBtn.style.backgroundColor = "white";
-      likeBtn.style.border = "none";
-      likeBtn.style.padding = "0.5rem 1rem";
-      likeBtn.style.borderRadius = "5px";
+    likeBtn.textContent = "Ja, jeg liker deg";
+    likeBtn.style.marginTop = "10px";
+    likeBtn.style.backgroundColor = "white";
+    likeBtn.style.border = "none";
+    likeBtn.style.padding = "0.5rem 1rem";
+    likeBtn.style.borderRadius = "5px";
 
-      likeBtn.addEventListener("click", async() => {
-        if (counter < maxLike) {
-          counter++;
-          likedUsers.push(user);
+    likeBtn.addEventListener("click", async () => {
+      if (counter < maxLike) {
+        counter++;
+        likedUsers.push(user);
 
-          localStorage.setItem("likedUsers", JSON.stringify(likedUsers)); 
-          localStorage.setItem("likeCounter", counter);
-          postLikedUsers(user)
+        localStorage.setItem("likedUsers", JSON.stringify(likedUsers));
+        localStorage.setItem("likeCounter", counter);
+        postLikedUsers(user);
 
-          femaleFromLocal(likedUsers); // oppdaterer liked users slik at man ikke trenger å refreshe siden.
-
-        }else if (counter === maxLike){
-            alert(`Du har ingen flere likes ${maxLike}`)
-        }
-        console.log("like");
-        updateButtons();
-      });
-
-      userCards.appendChild(likeBtn);
-      femaleContainer.appendChild(userCards);
+        femaleFromLocal(likedUsers); // oppdaterer liked users slik at man ikke trenger å refreshe siden.
+        likecounter();
+      } else if (counter === maxLike) {
+        alert(`Du har ingen flere likes ${maxLike}`);
+      }
+      console.log("like");
+      updateButtons();
     });
-    femaleContainer.prepend(removeFemale); // prepend legger det til øverst, istedet for nederst
 
-    removeFemale.addEventListener("click", () => {
-      femaleContainer.innerHTML = "";
-      localStorage.removeItem("femaleBtnClicked", "false");
-      const femaleBtn = document.getElementById("getFemaleBtn");
-      femaleBtn.textContent = "Kvinne";
+    userCards.appendChild(likeBtn);
+    femaleContainer.appendChild(userCards);
+  });
+  femaleContainer.prepend(removeFemale); 
 
-    });
-  };
+  removeFemale.addEventListener("click", () => {
+    femaleContainer.innerHTML = "";
+    localStorage.removeItem("femaleBtnClicked", "false");
+    const femaleBtn = document.getElementById("getFemaleBtn");
+    femaleBtn.textContent = "Kvinne";
+  });
+}
 
+export function likecounter(){
+const likeCounteContainer = document.getElementById("like-counter-container");
+likeCounteContainer.innerHTML = ""; 
+const likeCounterText = document.createElement("h3");
+likeCounterText.textContent = `Du har ${counter} av ${maxLike} likes igjen`;
+likeCounteContainer.appendChild(likeCounterText);
+}
