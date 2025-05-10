@@ -1,6 +1,6 @@
 let counterText;
 let likedUsers = JSON.parse(localStorage.getItem("likedUsersMale")) || [];
-let counter = parseInt(localStorage.getItem("likedCounterMale")) || 0;
+let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 
 const maxLikes = 10; // makst tilgjengelige likes
 
@@ -56,7 +56,7 @@ function displayFromLocalStorage(maleFromLocal) {
 
       if (counter > 0) {
         counter--;
-        localStorage.setItem("likedCounterMale", counter);
+        localStorage.setItem("likeCounter", counter);
       }
       likedUsers = currentData; //oppdaterer den globale listen
       displayFromLocalStorage(currentData);
@@ -114,7 +114,7 @@ export function displayMaleUsers(users, bgColor) {
         likedUsers.push(user);
 
         localStorage.setItem("likedUsersMale", JSON.stringify(likedUsers));
-        localStorage.setItem("likedCounterMale", counter);
+        localStorage.setItem("likeCounter", counter);
 
         displayFromLocalStorage(likedUsers);
       } else if (counter === maxLikes) {
