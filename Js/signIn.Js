@@ -1,4 +1,4 @@
-import { getSignInData } from "../Request/GET.JS"; 
+import { getSignInData } from "../Request/loginGET.js"; 
 
 const loginBtn = document.getElementById("loginBtn");
 
@@ -14,7 +14,7 @@ const matchUser = allUsers.find((user) =>
 
 if(matchUser){
     localStorage.setItem("Username",JSON.stringify(matchUser));
-    window.location.href ="/datingSite.html"
+     window.location.href ="/datingSite.html" 
     console.log("Vellykket",matchUser)
     
 }else{

@@ -1,28 +1,40 @@
-import { signUpsUrl, randomFemale } from "./data.js";
+import { randomFemale} from "./data.js";
 import {displayFemaleUsers} from "../Js/datingSite.js"
-export async function getSignInData(){
-    try{
-        const response = await axios.get(signUpsUrl);
-        const data = await response.data
-        console.log("Alle brukere er hentet",data);
-        return data; 
 
-    }catch(error){
-        console.error("Ingen data å hente", error)
-        return [];
-    }
-};
 
 // Henter Kvinner fra RandomApi
-export async function getFemaleData(request){
-    try{
-        const response = await axios.get(randomFemale);
-        const data = await response.data.results
-        console.log("Kvinne hentet",data);
-        displayFemaleUsers(data)
-        return data;
-    }catch(error){
-        console.error("Ingen data å hente", error)
-    }
-};
-getFemaleData();
+
+ let femaleUsers = [];
+// counter tekst er for å vise i browseren hvor mange like/dislike brukeren har tatt.
+const femaleBtn = document.getElementById("getFemaleBtn");
+femaleBtn.addEventListener("click", async function (e) {
+  e.preventDefault();
+  try {
+    const response = await axios.get(randomFemale);
+    const data = await response.data.results; // her la jeg til en .results på slutten, Grunne til det, er at det ble lagret i localS inne i Results, så fikk ikke displaye det i displayFromLocalStorage.. Da kunne jeg kalle på const getfromlocal, som argument.
+    femaleUsers = femaleUsers.concat(data); // brukes til å sette sammen to eller flere strings eller arrays. Å den returnerer en ny string eller ny array
+    
+    console.log("Henter Kvinner", data);
+    
+    displayFemaleUsers(data, "#f4c2c2");
+    localStorage.setItem("lastFemaleUser",JSON.stringify(data[0]))
+    } catch (error) {
+    console.error("Error getting data", error);
+  }
+  femaleBtn.textContent = "Nei/Neste kvinne";
+  localStorage.setItem("femaleBtnClicked", "true")
+ 
+});
+
+document.addEventListener("DOMContentLoaded", async ()=> {
+ const btnFemaleClicked = localStorage.getItem("femaleBtnClicked");
+ const lastFemaleUser = localStorage.getItem("lastFemaleUser");
+ if (btnFemaleClicked && lastFemaleUser){
+    const femaleUser = JSON.parse(lastFemaleUser);
+    displayFemaleUsers([femaleUser], "#f4c2c2");
+    femaleBtn.textContent = "Nei/Neste kvinne";
+    console.log("Henter Kvinner fra LocalStorage", femaleUser);
+ }
+
+});
+

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
@@ -15,20 +16,46 @@
       integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
       crossorigin="anonymous"
     />
+    
     <title>Dating Side</title>
   </head>
   <body>
-    <div id="welcome-user"></div>
-    <button id="edit-your-info" type="button">Rediger info</button>
-
-    <div>
-      <button id="getFemaleBtn" type="button">Kvinner</button>
-      <div id="female-container"></div>
+    <nav>
+      <h1>Finn Kjærligheten</h1>
+    <div class="W-U" id="welcome-user">
+      <button class="top-btn btn btn-primary w-10" id="edit" type="button">Rediger info</button>
+      <button class="top-btn btn btn-primary w-10" id="logOut" type="button">Logg ut</button>
     </div>
     
+    </nav>
 
+    <div class="gender-Section">
+      <button class="btn btn-danger " id="getFemaleBtn" type="button">Kvinner</button>
+      <button class="btn btn-primary " id="getMaleBtn" type="button">Menn</button>
+      <button class="btn btn-success " id="getAllBtn" type="button">Alle</button>
+    </div>
+
+    <div class="container-gender">
+      
+        <div id="female-container"></div>
+      <div id="male-container"></div>
+      <div id="all-container"></div>
+     
+      
+    </div>
+
+    <h2>Dine like Brukere</h2>
+    <div class="liked-users">
+      
+      <div class="likedcontainer" id="liked-container"></div>
+      <div class="likedcontainer" id="male-liked-container"></div>
+      <div class="likedcontainer" id="all-liked-container"></div>
+    </div>
     <script type="module" src="/Js/datingSite.js"></script>
+    <script type="module" src="/Js/datingMale.js"></script>
     <script type="module" src="/Request/PUT.js"></script>
     <script type="module" src="/Request/GET.js"></script>
+    <script type="module" src="/Request/maleGET.js"></script>
+  
   </body>
 </html>

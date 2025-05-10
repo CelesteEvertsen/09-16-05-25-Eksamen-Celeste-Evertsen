@@ -1,4 +1,4 @@
- import { signUpsUrl } from "./data.js"; 
+ import { signUpsUrl,LikedUsersToCRUD } from "./data.js"; 
 
 // Poster Nye registreinger
 
@@ -10,5 +10,17 @@ export async function postSignUpData(request){
 
     }catch(error){
         console.error("Ikke mulig å poste ny bruker", error)
+    }
+}
+
+export async function postLikedUsers(request){
+    try{
+        const response = await axios.post(LikedUsersToCRUD, request)
+        const data = await response.data
+        
+        console.log("Postet likte brukere fra Local til CRUD", data)
+        return data
+    }catch(error){
+        console.error("Error posting data", error);
     }
 }

@@ -28,7 +28,7 @@ registerBtn.addEventListener("click", async function (e) {
   try{
     await postSignUpData(loginData);
     registerUser.innerHTML = '<p>Du er nå registert!</p>'
-    registerBtn.value = "Logg inn";
+    registerBtn.value = "Gå til Inlogging";
     registerBtn.addEventListener("click", (e)=>{
         e.preventDefault();
         window.location.href = "/signin.html";
