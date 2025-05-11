@@ -1,4 +1,4 @@
- import { signUpsUrl,LikedUsersToCRUD } from "./data.js"; 
+ import { signUpsUrl,LikedFemaleToCRUD } from "./data.js"; 
 
 // Poster Nye registreinger
 
@@ -15,7 +15,7 @@ export async function postSignUpData(request){
 
 export async function postLikedUsers(request){
     try{
-        const response = await axios.post(LikedUsersToCRUD, request)
+        const response = await axios.post(LikedFemaleToCRUD, request)
         const data = await response.data
         const currentUser = JSON.parse(localStorage.getItem("likedUsers")) || [];
         const updatedUser = {

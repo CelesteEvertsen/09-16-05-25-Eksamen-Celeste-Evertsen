@@ -165,15 +165,13 @@ export function displayFemaleUsers(users) {
     likeBtn.addEventListener("click", async () => {
       if (counter < maxLike) {
         counter++;
-        //likedUsers.push(user);
 
         const saveUser = await postLikedUsers(user);
         likedUsers.push(saveUser);
         localStorage.setItem("likedUsers", JSON.stringify(likedUsers));
         localStorage.setItem("likeCounter", counter);
-        //postLikedUsers(user);
 
-        femaleFromLocal(likedUsers); // oppdaterer liked users slik at man ikke trenger å refreshe siden.
+        femaleFromLocal(likedUsers); 
         likecounter();
       } else if (counter === maxLike) {
         alert(`Du har ingen flere likes ${maxLike}`);
