@@ -55,6 +55,7 @@ const getFromLocalStorge = JSON.parse(localStorage.getItem("allLikedUsers")) || 
             ${local.name.last} </h2>
             <p>Alder: ${local.dob.age} Kjønn: ${local.gender}</p>
             <p>By: ${local.location.city}</p>
+            <p>Land: ${local.location.country}</p>
             
             `;
     const dislikeBtn = document.createElement("button");
@@ -113,6 +114,7 @@ export function displayAllUsers(users) {
         <h2>${user.name.first} ${user.name.last}</h2>
         <p>Alder: ${user.dob.age}
         <p>By: ${user.location.city}</p>
+        <p>Land: ${user.location.country}</p>
         `;
 
     
@@ -128,18 +130,17 @@ export function displayAllUsers(users) {
     likeBtn.addEventListener("click", async () => {
       if (counter < maxLike) {
         counter++;
-        likedUsers.push(user);
+        const saveUser = await postAllLikedUsers(user);
+        likedUsers.push(saveUser);
 
         localStorage.setItem("allLikedUsers", JSON.stringify(likedUsers));
         localStorage.setItem("likeCounter", counter);
-        postAllLikedUsers(user);
 
-        allUsersFromLocal(likedUsers); // oppdaterer liked users slik at man ikke trenger å refreshe siden.
+        allUsersFromLocal(likedUsers); 
         likecounter();
       } else if (counter === maxLike) {
         alert(`Du har ingen flere likes ${maxLike}`);
       }
-      console.log("like");
       updateButtons();
     });
 

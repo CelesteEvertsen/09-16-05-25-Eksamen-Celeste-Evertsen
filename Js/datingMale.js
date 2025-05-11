@@ -111,16 +111,16 @@ export function displayMaleUsers(users, bgColor) {
     maleLikeBtn.addEventListener("click", async() => {
       if (counter < maxLikes) {
         counter++;
-       // likedUsers.push(user);
-         const saveUser = await postLikedMaleUsers(user);;
+       
+         const saveUser = await postLikedMaleUsers(user);
          likedUsers.push(saveUser);
+
         localStorage.setItem("likedUsersMale", JSON.stringify(likedUsers));
         localStorage.setItem("likeCounter", counter);
-        postLikedMaleUsers(user);
+        
        
         displayFromLocalStorage(likedUsers);
-        location.reload()
-        
+       
       } else if (counter === maxLikes) {
         alert("Du har brukt alle dinne Manne likes");
       }

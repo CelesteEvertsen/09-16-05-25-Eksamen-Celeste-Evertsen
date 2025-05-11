@@ -92,6 +92,7 @@ const getFromLocalStorge = JSON.parse(localStorage.getItem("likedUsers")) || [];
             ${local.name.last} </h2>
             <p>Alder: ${local.dob.age} Kjønn: ${local.gender}</p>
             <p>By: ${local.location.city}</p>
+            <p>Land: ${local.location.country}</p>
             
             `;
     const dislikeBtn = document.createElement("button");
@@ -150,6 +151,7 @@ export function displayFemaleUsers(users) {
         <h2>${user.name.first} ${user.name.last}</h2>
         <p>Alder: ${user.dob.age}
         <p>By: ${user.location.city}</p>
+        <p>Land: ${user.location.country}</p>
         `;
 
     
