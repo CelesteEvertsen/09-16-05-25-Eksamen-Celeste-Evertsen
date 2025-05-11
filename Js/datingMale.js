@@ -117,7 +117,7 @@ export function displayMaleUsers(users, bgColor) {
         localStorage.setItem("likedUsersMale", JSON.stringify(likedUsers));
         localStorage.setItem("likeCounter", counter);
         postLikedMaleUsers(user);
-       // postLikedUsers(user);
+       
         displayFromLocalStorage(likedUsers);
         location.reload()
         

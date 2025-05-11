@@ -59,7 +59,7 @@ let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 
 const maxLike = 10;
 
-// tillegg funkjsonalitet, teller antal likes
+// tillegg funkjsonalitet, teller antall likes
 export function updateButtons() {
   const likeBtn = document.createElement("button");
   const removeLikes = document.createElement("button");

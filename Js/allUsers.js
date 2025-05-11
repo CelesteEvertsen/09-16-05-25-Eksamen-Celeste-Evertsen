@@ -1,12 +1,19 @@
 import { getAllUsers } from "../Request/allUsersGET.js";
-import { likecounter, updateButtons } from "./datingSite.js";
+import { likecounter} from "./datingSite.js";
+import { postAllLikedUsers} from "../Request/allUserPOST.js";
+import { deleteLikedUsers} from "../Request/allUserDELETE.js";
 
-let counterText;
+
+
 let likedUsers = JSON.parse(localStorage.getItem("allLikedUsers")) || [];
 let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 
 const maxLike = 10;
-
+function updateButtons() {
+    const dislikeBtn = document.createElement("button");
+    dislikeBtn.disabled = counter >= maxLike;
+    dislikeBtn.disabled = counter <= 0;
+  }
 const allUsersBtn = document.getElementById("getAllBtn");
 allUsersBtn.addEventListener("click", async function (e) {
     await getAllUsers();
@@ -62,7 +69,7 @@ const getFromLocalStorge = JSON.parse(localStorage.getItem("allLikedUsers")) || 
     dislikeBtn.addEventListener("click", () => {
       const currentData = JSON.parse(localStorage.getItem("allLikedUsers")) || [];
       currentData.splice(index, 1);
-      localStorage.setItem("likedUsers", JSON.stringify(currentData));
+      localStorage.setItem("allLikedUsers", JSON.stringify(currentData));
 
       if (counter > 0) {
         counter--;
@@ -71,6 +78,7 @@ const getFromLocalStorge = JSON.parse(localStorage.getItem("allLikedUsers")) || 
       likedUsers = currentData;
       allUsersFromLocal(currentData); 
       updateButtons();
+      deleteLikedUsers(local);
     });
     userCard.append(dislikeBtn);
     allLikedContainer.append(userCard);
@@ -122,9 +130,9 @@ export function displayAllUsers(users) {
         counter++;
         likedUsers.push(user);
 
-        localStorage.setItem("likedUsers", JSON.stringify(likedUsers));
+        localStorage.setItem("allLikedUsers", JSON.stringify(likedUsers));
         localStorage.setItem("likeCounter", counter);
-        //postLikedUsers(user);
+        postAllLikedUsers(user);
 
         allUsersFromLocal(likedUsers); // oppdaterer liked users slik at man ikke trenger å refreshe siden.
         likecounter();
@@ -147,6 +155,6 @@ export function displayAllUsers(users) {
     allUsersBtn.textContent = "Alle";
   });
 }
-
-
+allUsersFromLocal(getFromLocalStorge);
+updateButtons();
 likecounter();
