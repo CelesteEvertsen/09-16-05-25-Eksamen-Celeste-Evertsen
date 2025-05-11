@@ -1,45 +1,108 @@
+import { getAllUsers } from "../Request/allUsersGET.js";
 
+export let allUsers = [];
+let currentIndex = 0;
 
-/* 
-export async function displayUsers(users) {
-    const allUsersContainer = document.getElementById("all-users-container");
-    allUsersContainer.innerHTML = ""; // Tøm container før visning
+let filteredUserList = [];
+let isFiltered = false;
+let currentFilteredIndex = 0;
 
-    users.forEach(user => {
-        const container = document.createElement("div");
-        container.classList.add("allUsersCard");
-
-        container.innerHTML = `
-            <img src="${user.picture.large}">
-            <h2>${user.name.first} ${user.name.last}</h2>
-            <p>Gender: ${user.gender}</p>
-            <p>Alder: ${user.dob.age}</p>
-            <p>${user.location.city}</p>
-        `;
-
-        const userColor = {
-            female: "lightpink",
-            male: "lightblue",
-            all: "lightgreen",
-        };
-        container.style.backgroundColor = userColor[user.gender] || userColor.all;
-
-        allUsersContainer.appendChild(container);
-    });
+export function settAllUsers(data) {
+  // settes i en funksjon, for når en Let exporteres så vlir den til en COSNT
+  allUsers = data;
+  currentIndex = 0;
+  isFiltered = false;
+  filteredUserList = [];
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    getAllUses();
+export function getAllUsersList() {
+  return allUsers;
+}
 
-    const searchGender = document.getElementById("search");
-    searchGender.addEventListener("change", (e) => {
-        const selectedGender = e.target.value.toLowerCase();
+const getAllBtn = document.getElementById("getAllBtn");
+getAllBtn.addEventListener("click", async () => {
+  await getAllUsers();
+  showUser();
+});
 
-        if (selectedGender === "") {
-            displayUsers(allUsers); // Vis alle
-        } else {
-            const filteredUsers = allUsers.filter(user => user.gender === selectedGender);
-            displayUsers(filteredUsers); // Vis kun valgt kjønn
-        }
-    });
-}); */
+
+export function showUser(data) {
+   
+    const container = document.getElementById("all-container");
+    container.innerHTML = "";
+
+    let user;
+    if (isFiltered) {
+        user = filteredUserList[currentFilteredIndex];
+    } else {
+        user = allUsers[currentIndex];
+    }
+
+
+    if (!user) {
+        container.innerHTML = "<p>Ingen flere brukere</p>";
+        return;
+    }
+
+    const card = document.createElement("div");
+    card.classList.add("allUsersCard");
+    card.innerHTML = `
+        <img src="${user.picture.large}">
+        <h2>${user.name.first} ${user.name.last}</h2>
+        <p>Alder: ${user.dob.age} Kjønn: ${user.gender}</p>
+        <p>By: ${user.location.city}</p>
+        <p>Land: ${user.location.country}</p>
+    `;
+    container.appendChild(card);
+}
+
+// Neste knapp:
+const nextBtn = document.getElementById("nextBtn");
+nextBtn.addEventListener("click", () => {
+if(isFiltered){
+    if (currentFilteredIndex < filteredUserList.length - 1) {
+        currentFilteredIndex++;
+        showUser();
+    }else{
+        alert("Du har sett alle filtrerte brukere!");
+       
+    }
+}else{
+    if (currentIndex < allUsers.length - 1) {
+        currentIndex++;
+        showUser();
+    } else {
+        alert("Du har sett alle brukerne!");
+    }
+}
+
+   
+});
+
+
+const filterBtn = document.getElementById("filterBtn");
+filterBtn.addEventListener("click", async () => {
+  const ageInput = document.getElementById("ageInput").value;
+  const genderSelection = document.getElementById("genderSelection").value;
+
+  filteredUserList = getAllUsersList();
+  if(ageInput !== "") {
+    const age = parseInt(ageInput);
+    filteredUserList = filteredUserList.filter((user) => user.dob.age === age);
+}
+
+if(genderSelection !== "") {
+    filteredUserList = filteredUserList.filter((user) => user.gender.toLowerCase() === genderSelection.toLowerCase());
+}
+
+console.log("Filtered user list:", filteredUserList);
+
+if (filteredUserList.length === 0){
+    alert("Ingenbruker funnet med det filteret");
+    return;
+}
+isFiltered = true;
+  currentFilteredIndex = 0;
+  
+  showUser();
+});

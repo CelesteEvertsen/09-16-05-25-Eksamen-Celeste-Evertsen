@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", async ()=> {
  if (btnMaleClicked && lastMaleUser){
     const maleUser = JSON.parse(lastMaleUser);
     displayMaleUsers([maleUser], "lightblue");
-    maleBtn.textContent = "Nei/Neste kvinne";
-    console.log("Henter Kvinner fra LocalStorage", maleUser);
+    maleBtn.textContent = "Nei/Neste Menn";
+    console.log("Henter Menn fra LocalStorage", maleUser);
  }
 
 });

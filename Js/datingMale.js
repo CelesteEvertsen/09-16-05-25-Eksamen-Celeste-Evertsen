@@ -1,5 +1,5 @@
 import { likecounter } from "./datingSite.js";
-let counterText;
+
 let likedUsers = JSON.parse(localStorage.getItem("likedUsersMale")) || [];
 let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 
