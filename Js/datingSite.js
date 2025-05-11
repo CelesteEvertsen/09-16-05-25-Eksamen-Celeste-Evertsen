@@ -1,6 +1,6 @@
 import { putEditUser } from "../Request/PUT.js";
 import { postLikedUsers } from "../Request/POST.js";
-
+import { deleteLikedUsers } from "../Request/DELETE.js";
 document.addEventListener("DOMContentLoaded", () => {
   showUserInHeader();
   femaleFromLocal(getFromLocalStorge);
@@ -115,6 +115,7 @@ const getFromLocalStorge = JSON.parse(localStorage.getItem("likedUsers")) || [];
       likedUsers = currentData;
       femaleFromLocal(currentData); 
       updateButtons();
+      deleteLikedUsers(local);
     });
     userCard.append(dislikeBtn);
     likeContainer.append(userCard);
@@ -164,11 +165,13 @@ export function displayFemaleUsers(users) {
     likeBtn.addEventListener("click", async () => {
       if (counter < maxLike) {
         counter++;
-        likedUsers.push(user);
+        //likedUsers.push(user);
 
+        const saveUser = await postLikedUsers(user);
+        likedUsers.push(saveUser);
         localStorage.setItem("likedUsers", JSON.stringify(likedUsers));
         localStorage.setItem("likeCounter", counter);
-        postLikedUsers(user);
+        //postLikedUsers(user);
 
         femaleFromLocal(likedUsers); // oppdaterer liked users slik at man ikke trenger å refreshe siden.
         likecounter();

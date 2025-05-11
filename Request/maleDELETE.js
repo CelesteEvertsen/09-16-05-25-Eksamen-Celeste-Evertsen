@@ -1,8 +1,8 @@
-import { LikedUsersToCRUD } from "./data.js";
+import { LikedMaleToCRUD } from "./data.js";
 
-export async function deleteLikedUsers(user) {
+export async function deleteLikedMale(user) {
     try {
-      const url = `${LikedUsersToCRUD}/${user._id}`;
+      const url = `${LikedMaleToCRUD}/${user._id}`;
       const response = await axios.delete(url);
   
       console.log("Slettet fra CRUDCrud", response.data);

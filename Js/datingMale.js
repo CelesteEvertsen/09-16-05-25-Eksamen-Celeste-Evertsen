@@ -1,4 +1,6 @@
 import { likecounter } from "./datingSite.js";
+import {postLikedMaleUsers} from "../Request/malePOST.js";
+import { deleteLikedMale } from "../Request/maleDELETE.js";
 
 let likedUsers = JSON.parse(localStorage.getItem("likedUsersMale")) || [];
 let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
@@ -61,6 +63,7 @@ function displayFromLocalStorage(maleFromLocal) {
       likedUsers = currentData; 
       displayFromLocalStorage(currentData);
       updateButtons();
+      deleteLikedMale(maleUsers);
     });
     maleCard.append(maledislikeBtn);
     likedContainer.append(maleCard);
@@ -105,16 +108,19 @@ export function displayMaleUsers(users, bgColor) {
     maleLikeBtn.style.padding = "0.5rem 1rem";
     maleLikeBtn.style.borderRadius = "5px";
 
-    maleLikeBtn.addEventListener("click", () => {
+    maleLikeBtn.addEventListener("click", async() => {
       if (counter < maxLikes) {
         counter++;
-        likedUsers.push(user);
-
+       // likedUsers.push(user);
+         const saveUser = await postLikedMaleUsers(user);;
+         likedUsers.push(saveUser);
         localStorage.setItem("likedUsersMale", JSON.stringify(likedUsers));
         localStorage.setItem("likeCounter", counter);
-
+        postLikedMaleUsers(user);
+       // postLikedUsers(user);
         displayFromLocalStorage(likedUsers);
         location.reload()
+        
       } else if (counter === maxLikes) {
         alert("Du har brukt alle dinne Manne likes");
       }

@@ -17,7 +17,13 @@ export async function postLikedUsers(request){
     try{
         const response = await axios.post(LikedUsersToCRUD, request)
         const data = await response.data
-        
+        const currentUser = JSON.parse(localStorage.getItem("likedUsers")) || [];
+        const updatedUser = {
+            ...request,
+            _id: data._id,
+        };
+        currentUser.push(updatedUser);
+        localStorage.setItem("likedUsers", JSON.stringify(currentUser));
         console.log("Postet likte brukere fra Local til CRUD", data)
         return data
     }catch(error){
