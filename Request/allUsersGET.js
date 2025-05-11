@@ -7,11 +7,12 @@ export async function getAllUsers() {
         const response = await axios.get(allUsersURL);
         const data = await response.data.results;
         
-        console.log("Henter alle brukere", data);
         displayAllUsers(data);
+
         localStorage.setItem("lastUser",JSON.stringify(data[0]))
-       
+        
+        console.log("Henter alle brukere", response.status);
     } catch (error) {
-        console.error("Ikke mulig å hente alle brukere", error);
+        console.error("Ikke mulig å hente alle brukere",  error.message.status);
     }
 }

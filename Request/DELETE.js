@@ -5,8 +5,8 @@ export async function deleteLikedUsers(user) {
       const url = `${LikedFemaleToCRUD}/${user._id}`;
       const response = await axios.delete(url);
   
-      console.log("Slettet fra CRUDCrud", response.data);
+      console.log("Slettet fra CRUDCrud", response.status);
     } catch (error) {
-      console.error("Feil ved sletting:", error);
+      console.error("Feil ved sletting:",  error.message.status);
     }
   }

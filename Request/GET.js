@@ -14,12 +14,12 @@ femaleBtn.addEventListener("click", async function (e) {
     const data = await response.data.results; // her la jeg til en .results på slutten, Grunne til det, er at det ble lagret i localS inne i Results, så fikk ikke displaye det i displayFromLocalStorage.. Da kunne jeg kalle på const getfromlocal, som argument.
     femaleUsers = femaleUsers.concat(data); // brukes til å sette sammen to eller flere strings eller arrays. Å den returnerer en ny string eller ny array
     
-    console.log("Henter Kvinner", data);
-    
     displayFemaleUsers(data, "#f4c2c2");
     localStorage.setItem("lastFemaleUser",JSON.stringify(data[0]))
+
+    console.log("Henter Kvinner", response.status);
     } catch (error) {
-    console.error("Error getting data", error);
+    console.error("Error getting data",  error.message.status);
   }
   femaleBtn.textContent = "Nei/Neste kvinne";
   localStorage.setItem("femaleBtnClicked", "true")

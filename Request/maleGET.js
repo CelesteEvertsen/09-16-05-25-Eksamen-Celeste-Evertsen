@@ -13,12 +13,14 @@ maleBtn.addEventListener("click", async function(e){
         const response = await axios.get(maleUrl);
             const data = await response.data.results; 
             maleUser = maleUser.concat(data); 
-            console.log("Henter Mann", data);
+
+            console.log("Henter Mann",response.status);
+
             displayMaleUsers(data, "lightblue") 
            localStorage.setItem("lastMaleUser",JSON.stringify(data[0]));
            
     }catch(error){
-        console.error("Ikke mulig å hente MEnn",error)
+        console.error("Ikke mulig å hente MEnn", error.message.status);
     }
     maleBtn.textContent = "Nei/Neste Mann";
     localStorage.setItem("maleBtnClicked", "true")

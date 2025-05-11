@@ -11,9 +11,9 @@ export async function postLikedMaleUsers(request){
         };
         currentUser.push(updatedUser);
         localStorage.setItem("likedUsersMale", JSON.stringify(currentUser));
-        console.log("Postet likte brukere fra Local til CRUD", data)
+        console.log("Postet likte brukere fra Local til CRUD", response.status)
         return data
     }catch(error){
-        console.error("Error posting data", error);
+        console.error("Error posting data",  error.message.status);
     }
 }
