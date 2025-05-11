@@ -60,13 +60,13 @@ let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 const maxLike = 10;
 
 // tillegg funkjsonalitet, teller antal likes
-function updateButtons() {
+export function updateButtons() {
   const likeBtn = document.createElement("button");
   const removeLikes = document.createElement("button");
   likeBtn.disabled = counter >= maxLike;
   removeLikes.disabled = counter <= 0;
   if (counterText) {
-    counterText.textContent = `${counter}/${maxLike} likes brukt`;
+    counterText.textContent = `${counter}/${maxLike} likes brukt`; // se på denne, er denne koden DØ?
   }
 }
 

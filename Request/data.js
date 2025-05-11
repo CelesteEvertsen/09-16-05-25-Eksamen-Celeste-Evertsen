@@ -7,6 +7,6 @@ export const randomFemale = `https://randomuser.me/api/?page=${page}&limit=${bat
 export const CrudFemale =`https://crudcrud.com/api/${key}/female`;
 export const LikedUsersToCRUD =`https://crudcrud.com/api/${key}/AllLiked`;
 
-export const allUsersURL = `https://randomuser.me/api/?results=50`
+export const allUsersURL = `https://randomuser.me/api/`
 
 export const maleUrl = `https://randomuser.me/api/?page=${page}&limit=${batchSize}&gender=male`;
