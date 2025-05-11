@@ -1,108 +1,152 @@
 import { getAllUsers } from "../Request/allUsersGET.js";
+import { likecounter, updateButtons } from "./datingSite.js";
 
-export let allUsers = [];
-let currentIndex = 0;
+let counterText;
+let likedUsers = JSON.parse(localStorage.getItem("allLikedUsers")) || [];
+let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 
-let filteredUserList = [];
-let isFiltered = false;
-let currentFilteredIndex = 0;
+const maxLike = 10;
 
-export function settAllUsers(data) {
-  // settes i en funksjon, for når en Let exporteres så vlir den til en COSNT
-  allUsers = data;
-  currentIndex = 0;
-  isFiltered = false;
-  filteredUserList = [];
-}
+const allUsersBtn = document.getElementById("getAllBtn");
+allUsersBtn.addEventListener("click", async function (e) {
+    await getAllUsers();
+    allUsersBtn.textContent = "Nei/Neste bruker";
+    localStorage.setItem("allUserBtnClicked", "true");
+})
 
-export function getAllUsersList() {
-  return allUsers;
-}
+document.addEventListener("DOMContentLoaded", async ()=> {
+ const allUserBtnClicked = localStorage.getItem("allUserBtnClicked");
+ const lastUser = localStorage.getItem("lastUser");
+ if (allUserBtnClicked && lastUser){
+    const allUser = JSON.parse(lastUser);
+    displayAllUsers([allUser], "#f4c2c2");
+    allUsersBtn.textContent = "Nei/Neste bruker";
+    console.log("Henter bruker fra LocalStorage", allUser);
+ }
 
-const getAllBtn = document.getElementById("getAllBtn");
-getAllBtn.addEventListener("click", async () => {
-  await getAllUsers();
-  showUser();
 });
+    
+const getFromLocalStorge = JSON.parse(localStorage.getItem("allLikedUsers")) || [];
 
+ function allUsersFromLocal(localUser) {
+  const allLikedContainer = document.getElementById("all-liked-container");
+  allLikedContainer.innerHTML = "";
 
-export function showUser(data) {
-   
-    const container = document.getElementById("all-container");
-    container.innerHTML = "";
+  localUser.forEach((local, index) => {
+    const userCard = document.createElement("div");
+    userCard.classList.add("all-user-card");
 
-    let user;
-    if (isFiltered) {
-        user = filteredUserList[currentFilteredIndex];
-    } else {
-        user = allUsers[currentIndex];
-    }
+    userCard.style.border = "1px solid #ccc";
+    userCard.style.padding = "1rem";
+    userCard.style.marginBottom = "1rem";
+    userCard.style.borderRadius = "10px";
+    userCard.style.background = "lightgreen";
 
+    userCard.innerHTML = `
+            <img src="${local.picture.large}">
+            <h2> ${local.name.title} ${local.name.first}, 
+            ${local.name.last} </h2>
+            <p>Alder: ${local.dob.age} Kjønn: ${local.gender}</p>
+            <p>By: ${local.location.city}</p>
+            
+            `;
+    const dislikeBtn = document.createElement("button");
+    dislikeBtn.textContent = "Dislike";
+    dislikeBtn.style.marginTop = "10px";
+    dislikeBtn.style.backgroundColor = "#f44336";
+    dislikeBtn.style.color = "white";
+    dislikeBtn.style.border = "none";
+    dislikeBtn.style.padding = "0.5rem 1rem";
+    dislikeBtn.style.borderRadius = "5px";
 
-    if (!user) {
-        container.innerHTML = "<p>Ingen flere brukere</p>";
-        return;
-    }
+    dislikeBtn.addEventListener("click", () => {
+      const currentData = JSON.parse(localStorage.getItem("allLikedUsers")) || [];
+      currentData.splice(index, 1);
+      localStorage.setItem("likedUsers", JSON.stringify(currentData));
 
-    const card = document.createElement("div");
-    card.classList.add("allUsersCard");
-    card.innerHTML = `
+      if (counter > 0) {
+        counter--;
+        localStorage.setItem("likeCounter", counter);
+      }
+      likedUsers = currentData;
+      allUsersFromLocal(currentData); 
+      updateButtons();
+    });
+    userCard.append(dislikeBtn);
+    allLikedContainer.append(userCard);
+  });
+}
+
+// Vise Kvinner
+
+export function displayAllUsers(users) {
+  const allUserContainer = document.getElementById("all-container");
+  allUserContainer.innerHTML = "";
+
+  const removeAllUsers = document.createElement("button");
+  removeAllUsers.type = "button";
+  removeAllUsers.classList.add("btn", "btn-danger");
+  removeAllUsers.style.marginTop = "10px";
+  removeAllUsers.style.marginBottom = "10px";
+  removeAllUsers.textContent = "ikke vis bruker";
+
+  users.forEach((user) => {
+    const userCards = document.createElement("div");
+    userCards.classList.add("allCard");
+
+    userCards.style.border = "1px solid #ccc";
+    userCards.style.padding = "1rem";
+    userCards.style.marginBottom = "1rem";
+    userCards.style.borderRadius = "10px";
+    userCards.style.background = "lightgreen";
+
+    userCards.innerHTML = `
         <img src="${user.picture.large}">
         <h2>${user.name.first} ${user.name.last}</h2>
-        <p>Alder: ${user.dob.age} Kjønn: ${user.gender}</p>
+        <p>Alder: ${user.dob.age}
         <p>By: ${user.location.city}</p>
-        <p>Land: ${user.location.country}</p>
-    `;
-    container.appendChild(card);
+        `;
+
+    
+
+    const likeBtn = document.createElement("button");
+    likeBtn.textContent = "Ja, jeg liker deg";
+    likeBtn.style.marginTop = "10px";
+    likeBtn.style.backgroundColor = "white";
+    likeBtn.style.border = "none";
+    likeBtn.style.padding = "0.5rem 1rem";
+    likeBtn.style.borderRadius = "5px";
+
+    likeBtn.addEventListener("click", async () => {
+      if (counter < maxLike) {
+        counter++;
+        likedUsers.push(user);
+
+        localStorage.setItem("likedUsers", JSON.stringify(likedUsers));
+        localStorage.setItem("likeCounter", counter);
+        //postLikedUsers(user);
+
+        allUsersFromLocal(likedUsers); // oppdaterer liked users slik at man ikke trenger å refreshe siden.
+        likecounter();
+      } else if (counter === maxLike) {
+        alert(`Du har ingen flere likes ${maxLike}`);
+      }
+      console.log("like");
+      updateButtons();
+    });
+
+    userCards.appendChild(likeBtn);
+    allUserContainer.appendChild(userCards);
+  });
+  allUserContainer.prepend(removeAllUsers); 
+
+  removeAllUsers.addEventListener("click", () => {
+    allUserContainer.innerHTML = "";
+    localStorage.removeItem("allUserBtnClicked", "false");
+    const allUsersBtn = document.getElementById("getAllBtn");
+    allUsersBtn.textContent = "Alle";
+  });
 }
 
-// Neste knapp:
-const nextBtn = document.getElementById("nextBtn");
-nextBtn.addEventListener("click", () => {
-if(isFiltered){
-    if (currentFilteredIndex < filteredUserList.length - 1) {
-        currentFilteredIndex++;
-        showUser();
-    }else{
-        alert("Du har sett alle filtrerte brukere!");
-       
-    }
-}else{
-    if (currentIndex < allUsers.length - 1) {
-        currentIndex++;
-        showUser();
-    } else {
-        alert("Du har sett alle brukerne!");
-    }
-}
 
-   
-});
-
-
-const filterBtn = document.getElementById("filterBtn");
-filterBtn.addEventListener("click", async () => {
-  const ageInput = document.getElementById("ageInput").value;
-  const genderSelection = document.getElementById("genderSelection").value;
-
-  filteredUserList = getAllUsersList();
-  if(ageInput !== "") {
-    const age = parseInt(ageInput);
-    filteredUserList = filteredUserList.filter((user) => user.dob.age === age);
-}
-
-if(genderSelection !== "") {
-    filteredUserList = filteredUserList.filter((user) => user.gender.toLowerCase() === genderSelection.toLowerCase());
-}
-
-console.log("Filtered user list:", filteredUserList);
-
-if (filteredUserList.length === 0){
-    alert("Ingenbruker funnet med det filteret");
-    return;
-}
-isFiltered = true;
-  currentFilteredIndex = 0;
-  
-  showUser();
-});
+likecounter();
