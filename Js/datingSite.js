@@ -53,7 +53,7 @@ function showUserInHeader() {
   });
 }
 
-let counterText;
+
 let likedUsers = JSON.parse(localStorage.getItem("likedUsers")) || [];
 let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 
@@ -65,9 +65,7 @@ export function updateButtons() {
   const removeLikes = document.createElement("button");
   likeBtn.disabled = counter >= maxLike;
   removeLikes.disabled = counter <= 0;
-  if (counterText) {
-    counterText.textContent = `${counter}/${maxLike} likes brukt`; // se på denne, er denne koden DØ?
-  }
+  
 }
 
 const getFromLocalStorge = JSON.parse(localStorage.getItem("likedUsers")) || [];
@@ -178,7 +176,6 @@ export function displayFemaleUsers(users) {
       } else if (counter === maxLike) {
         alert(`Du har ingen flere likes ${maxLike}`);
       }
-      console.log("like");
       updateButtons();
     });
 

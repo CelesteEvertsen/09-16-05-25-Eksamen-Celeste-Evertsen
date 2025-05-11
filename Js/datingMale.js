@@ -5,13 +5,13 @@ import { deleteLikedMale } from "../Request/maleDELETE.js";
 let likedUsers = JSON.parse(localStorage.getItem("likedUsersMale")) || [];
 let counter = parseInt(localStorage.getItem("likeCounter")) || 0;
 
-const maxLikes = 10; // makst tilgjengelige likes
+const maxLike = 10; // makst tilgjengelige likes
 
 const maleLikeBtn = document.createElement("button");
 
 function updateButtons() {
   const maleDislikes = document.createElement("button");
-  maleLikeBtn.disabled = counter >= maxLikes;
+  maleLikeBtn.disabled = counter >= maxLike;
   maleDislikes.disabled = counter <= 0;
 }
 
@@ -109,7 +109,7 @@ export function displayMaleUsers(users, bgColor) {
     maleLikeBtn.style.borderRadius = "5px";
 
     maleLikeBtn.addEventListener("click", async() => {
-      if (counter < maxLikes) {
+      if (counter < maxLike) {
         counter++;
        
          const saveUser = await postLikedMaleUsers(user);
@@ -118,14 +118,12 @@ export function displayMaleUsers(users, bgColor) {
         localStorage.setItem("likedUsersMale", JSON.stringify(likedUsers));
         localStorage.setItem("likeCounter", counter);
         
-       
+        
         displayFromLocalStorage(likedUsers);
-       
-      } else if (counter === maxLikes) {
+        likecounter();
+      } else if (counter === maxLike) {
         alert("Du har brukt alle dinne Manne likes");
       }
-
-      console.log("Like menn");
       updateButtons();
     });
     userCard.append(maleLikeBtn);
@@ -144,4 +142,3 @@ export function displayMaleUsers(users, bgColor) {
 
 displayFromLocalStorage(getFromStorage);
 updateButtons();
-likecounter();
