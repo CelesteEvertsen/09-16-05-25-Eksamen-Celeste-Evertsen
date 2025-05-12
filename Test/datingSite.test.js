@@ -48,6 +48,10 @@ test("sjekker at #liked-container finnes i DOM", ()=>{
     const likedContainer = document.querySelector("#liked-container");
     expect (likedContainer).not.toBeNull();
 })
+test("sjekker at #male-liked-container finnes i DOM", ()=>{
+    const maleLikedContainer = document.querySelector("#male-liked-container");
+    expect (maleLikedContainer).not.toBeNull();
+})
 
 
 })
