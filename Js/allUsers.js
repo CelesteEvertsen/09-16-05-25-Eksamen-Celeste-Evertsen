@@ -138,6 +138,7 @@ export function displayAllUsers(users) {
 
         allUsersFromLocal(likedUsers); 
         likecounter();
+        location.reload()
       } else if (counter === maxLike) {
         alert(`Du har ingen flere likes ${maxLike}`);
       }

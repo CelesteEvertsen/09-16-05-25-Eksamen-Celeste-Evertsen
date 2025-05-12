@@ -121,6 +121,7 @@ export function displayMaleUsers(users, bgColor) {
         
         displayFromLocalStorage(likedUsers);
         likecounter();
+        location.reload()// bruker for å refresh, se om du finner en bedre løsning
       } else if (counter === maxLike) {
         alert("Du har brukt alle dinne Manne likes");
       }
