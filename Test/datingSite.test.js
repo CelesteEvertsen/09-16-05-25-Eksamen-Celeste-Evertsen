@@ -53,6 +53,5 @@ test("sjekker at #male-liked-container finnes i DOM", ()=>{
     expect (maleLikedContainer).not.toBeNull();
 })
 
-
 })
 
