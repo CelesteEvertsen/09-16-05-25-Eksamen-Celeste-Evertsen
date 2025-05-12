@@ -1,11 +1,11 @@
-export const key = "97f3679931e74296b75d6d66fd2b274a";
+export const key = "81afd8cc1d664f1fb7d4f8d43f8b1869";
 export const signUpsUrl = `https://crudcrud.com/api/${key}/login`;
  
 const page = 1;
 const batchSize = 1;
 export const randomFemale = `https://randomuser.me/api/?page=${page}&limit=${batchSize}&gender=female`;
 
-export const LikedFemaleToCRUD =`https://crudcrud.com/api/${key}/femleLiked`;
+export const LikedFemaleToCRUD =`https://crudcrud.com/api/${key}/femaleLiked`;
 
 
 

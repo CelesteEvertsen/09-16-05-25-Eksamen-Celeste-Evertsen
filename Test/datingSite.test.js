@@ -22,6 +22,16 @@ beforeEach(() => {
 
 
 });
+test("Sjekker at knappene for filtrering finnes",()=>{
+    const getFemalebtn = document.querySelector("#getFemaleBtn");
+    const getMalebtn = document.querySelector("#getMaleBtn");
+    const getAllBtn = document.querySelector("#getAllBtn");
+    
+    expect(getFemalebtn).not.toBeNull();
+    expect(getMalebtn).not.toBeNull();
+    expect(getAllBtn).not.toBeNull();
+   
+})
 
 // Tester Containerne der Brukerene legges inn
 test("Sjekk at .female-container finnes", () => {
@@ -44,13 +54,19 @@ test("sjekker at .container-gender finnes i DOM", ()=>{
     const genderContainer = document.querySelector(".container-gender");
     expect (genderContainer).not.toBeNull();
 })
+
+// testene under sjeker at containerne for likete brukere finnes
 test("sjekker at #liked-container finnes i DOM", ()=>{
-    const likedContainer = document.querySelector("#liked-container");
+    const likedContainer = document.querySelector("#female-liked-container");
     expect (likedContainer).not.toBeNull();
 })
 test("sjekker at #male-liked-container finnes i DOM", ()=>{
     const maleLikedContainer = document.querySelector("#male-liked-container");
     expect (maleLikedContainer).not.toBeNull();
+})
+test("sjekker at #all-liked-container finnes i DOM", ()=>{
+    const allLikedContainer = document.querySelector("#all-liked-container");
+    expect (allLikedContainer).not.toBeNull();
 })
 
 })

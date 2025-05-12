@@ -13,17 +13,18 @@ export async function postSignUpData(request){
     }
 }
 
-export async function postLikedUsers(request){
+// Poster Kvinner
+export async function postFemaleLikedUsers(request){
     try{
         const response = await axios.post(LikedFemaleToCRUD, request)
         const data = await response.data
-        const currentUser = JSON.parse(localStorage.getItem("likedUsers")) || [];
+        const currentUser = JSON.parse(localStorage.getItem("likedUsersFemale")) || [];
         const updatedUser = {
             ...request,
             _id: data._id,
         };
         currentUser.push(updatedUser);
-        localStorage.setItem("likedUsers", JSON.stringify(currentUser));
+        localStorage.setItem("likedUsersFemale", JSON.stringify(currentUser));
         console.log("Postet likte brukere fra Local til CRUD", response.status)
         return data
     }catch(error){

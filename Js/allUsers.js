@@ -14,6 +14,7 @@ function updateButtons() {
     dislikeBtn.disabled = counter >= maxLike;
     dislikeBtn.disabled = counter <= 0;
   }
+  
 const allUsersBtn = document.getElementById("getAllBtn");
 allUsersBtn.addEventListener("click", async function (e) {
     await getAllUsers();
@@ -80,6 +81,7 @@ const getFromLocalStorge = JSON.parse(localStorage.getItem("allLikedUsers")) || 
       allUsersFromLocal(currentData); 
       updateButtons();
       deleteLikedUsers(local);
+      
     });
     userCard.append(dislikeBtn);
     allLikedContainer.append(userCard);
@@ -138,7 +140,7 @@ export function displayAllUsers(users) {
 
         allUsersFromLocal(likedUsers); 
         likecounter();
-        location.reload()
+        
       } else if (counter === maxLike) {
         alert(`Du har ingen flere likes ${maxLike}`);
       }
@@ -160,3 +162,4 @@ export function displayAllUsers(users) {
 allUsersFromLocal(getFromLocalStorge);
 updateButtons();
 likecounter();
+

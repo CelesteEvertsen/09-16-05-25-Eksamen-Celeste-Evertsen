@@ -1,6 +1,6 @@
 import { LikedFemaleToCRUD } from "./data.js";
 
-export async function deleteLikedUsers(user) {
+export async function deleteFemaleLikedUsers(user) {
     try {
       const url = `${LikedFemaleToCRUD}/${user._id}`;
       const response = await axios.delete(url);
