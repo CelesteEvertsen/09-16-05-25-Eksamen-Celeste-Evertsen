@@ -68,6 +68,13 @@ test("sjekker at #all-liked-container finnes i DOM", ()=>{
     const allLikedContainer = document.querySelector("#all-liked-container");
     expect (allLikedContainer).not.toBeNull();
 })
+test("sjekker at #edit og #logout finnes i DOM", ()=>{
+    const editBtn = document.querySelector("#edit");
+    const logoutBtn = document.querySelector("#logOut");
+
+    expect (editBtn).not.toBeNull();
+    expect (logoutBtn).not.toBeNull();
 
 })
 
+});
