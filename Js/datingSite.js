@@ -4,6 +4,8 @@ import { deleteFemaleLikedUsers } from "../Request/DELETE.js";
 document.addEventListener("DOMContentLoaded", () => {
   showUserInHeader();
   femaleFromLocal(getFromLocalStorge);
+  showTimeAndDate()
+  toggleDarkLightMode()
 });
 
 //Tillegs funksjonalitet, logget ut
@@ -14,6 +16,7 @@ function logout() {
 window.location.href ="/signIn.html"
 };
 
+//Bruker navnet i Header
 function showUserInHeader() {
   const welcomeUserName = document.getElementById("welcome-user");
   const useInfo = JSON.parse(localStorage.getItem("Username"));
@@ -90,7 +93,7 @@ const getFromLocalStorge = JSON.parse(localStorage.getItem("likedUsersFemale")) 
     userCard.style.padding = "1rem";
     userCard.style.marginBottom = "1rem";
     userCard.style.borderRadius = "10px";
-    userCard.style.background = "white";
+    userCard.style.background = "lightpink";
 
     userCard.innerHTML = `
             <img src="${local.picture.large}">
@@ -165,7 +168,7 @@ export function displayFemaleUsers(users) {
     const likeBtn = document.createElement("button");
     likeBtn.textContent = "Ja, jeg liker deg";
     likeBtn.style.marginTop = "10px";
-    likeBtn.style.backgroundColor = "white";
+    likeBtn.style.backgroundColor = "lightgreen";
     likeBtn.style.border = "none";
     likeBtn.style.padding = "0.5rem 1rem";
     likeBtn.style.borderRadius = "5px";
@@ -206,4 +209,47 @@ likeCounteContainer.innerHTML = "";
 const likeCounterText = document.createElement("h3");
 likeCounterText.textContent = `Du har ${counter} av ${maxLike} likes igjen`;
 likeCounteContainer.appendChild(likeCounterText);
+} 
+
+// Dato og tid tillegg funkjsonalitet
+function showTimeAndDate(){
+  const date = new Date();
+  const timeDateContainer = document.getElementById("date-time");
+  const timeOptions = date.toLocaleString("no-NO",{
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
+  timeDateContainer.textContent = `Dato: ${timeOptions}`;
+  setTimeout(showTimeAndDate, 1000); // oppdaterer hvert sekund
 }
+
+// Mørk og lys modus tilleggsfunksjonalitet
+function toggleDarkLightMode(){
+  const body = document.body;
+  const themeBtn = document.getElementById("dark-light-toggle");
+
+  const saveTheme = localStorage.getItem("theme");
+  if(saveTheme === "dark"){
+    body.classList.add("dark-mode");
+    themeBtn.textContent = "☀️";
+  }
+
+  themeBtn.addEventListener("click", ()=>{
+    body.classList.toggle("dark-mode");
+
+    const isDark = body.classList.contains("dark-mode");
+    if(isDark){
+      localStorage.setItem("theme", "dark");
+      themeBtn.textContent = "☀️";
+    }else{
+      localStorage.setItem("theme", "light");
+      themeBtn.textContent = "🌑";
+    };
+  });
+};

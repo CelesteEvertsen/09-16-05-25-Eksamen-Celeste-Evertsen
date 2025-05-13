@@ -103,7 +103,7 @@ export function displayMaleUsers(users, bgColor) {
     const maleLikeBtn = document.createElement("button");
     maleLikeBtn.textContent = "Ja, jeg liker deg";
     maleLikeBtn.style.marginTop = "10px";
-    maleLikeBtn.style.backgroundColor = "white";
+    maleLikeBtn.style.backgroundColor = "lightgreen";
     maleLikeBtn.style.border = "none";
     maleLikeBtn.style.padding = "0.5rem 1rem";
     maleLikeBtn.style.borderRadius = "5px";
@@ -121,7 +121,7 @@ export function displayMaleUsers(users, bgColor) {
         
         displayFromLocalStorage(likedUsers);
         likecounter();
-        location.reload()// bruker for å refresh, se om du finner en bedre løsning
+        //location.reload()// bruker for å refresh, se om du finner en bedre løsning
       } else if (counter === maxLike) {
         alert("Du har brukt alle dinne Manne likes");
       }

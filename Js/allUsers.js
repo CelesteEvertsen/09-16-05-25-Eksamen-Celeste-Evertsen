@@ -124,7 +124,7 @@ export function displayAllUsers(users) {
     const likeBtn = document.createElement("button");
     likeBtn.textContent = "Ja, jeg liker deg";
     likeBtn.style.marginTop = "10px";
-    likeBtn.style.backgroundColor = "white";
+    likeBtn.style.backgroundColor = "green";
     likeBtn.style.border = "none";
     likeBtn.style.padding = "0.5rem 1rem";
     likeBtn.style.borderRadius = "5px";

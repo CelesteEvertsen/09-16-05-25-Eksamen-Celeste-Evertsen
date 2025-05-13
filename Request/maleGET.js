@@ -4,7 +4,7 @@ import { displayMaleUsers } from "../Js/datingMale.js"
 // Henter Menn
 const maleBtn = document.getElementById("getMaleBtn");
 
-let maleUser = [];
+//let maleUser = [];
 
 maleBtn.addEventListener("click", async function(e){
     e.preventDefault()
@@ -12,7 +12,7 @@ maleBtn.addEventListener("click", async function(e){
     try{
         const response = await axios.get(maleUrl);
             const data = await response.data.results; 
-            maleUser = maleUser.concat(data); 
+           // maleUser = maleUser.concat(data); 
 
             console.log("Henter Mann",response.status);
 
