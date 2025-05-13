@@ -237,7 +237,7 @@ function toggleDarkLightMode(){
   const saveTheme = localStorage.getItem("theme");
   if(saveTheme === "dark"){
     body.classList.add("dark-mode");
-    themeBtn.textContent = "☀️";
+    themeBtn.textContent = "☀️"; // https://emojipedia.org/
   }
 
   themeBtn.addEventListener("click", ()=>{
@@ -247,9 +247,11 @@ function toggleDarkLightMode(){
     if(isDark){
       localStorage.setItem("theme", "dark");
       themeBtn.textContent = "☀️";
+      themeBtn.style.border = "1px solid white";
     }else{
       localStorage.setItem("theme", "light");
       themeBtn.textContent = "🌑";
+      themeBtn.style.border = "1px solid black";
     };
   });
 };
