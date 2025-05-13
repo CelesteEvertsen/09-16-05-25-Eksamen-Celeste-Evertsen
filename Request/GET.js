@@ -4,15 +4,12 @@ import {displayFemaleUsers} from "../Js/datingSite.js"
 
 // Henter Kvinner fra RandomApi
 
-// let femaleUsers = [];
-
 const femaleBtn = document.getElementById("getFemaleBtn");
 femaleBtn.addEventListener("click", async function (e) {
   e.preventDefault();
   try {
     const response = await axios.get(randomFemale);
     const data = await response.data.results; 
-    //femaleUsers = femaleUsers.concat(data); 
     
     displayFemaleUsers(data, "#f4c2c2");
     localStorage.setItem("lastFemaleUser",JSON.stringify(data[0]))

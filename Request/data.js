@@ -1,4 +1,4 @@
-export const key = "ff497cd324c24e7cb315ab74b9e68b97";
+export const key = "652cdd6f40c34523a1e0514f43f53cd1";
 export const signUpsUrl = `https://crudcrud.com/api/${key}/login`;
  
 

@@ -88,7 +88,7 @@ const getFromLocalStorge = JSON.parse(localStorage.getItem("allLikedUsers")) || 
   });
 }
 
-// Vise Kvinner
+// Viser brukere
 
 export function displayAllUsers(users) {
   const allUserContainer = document.getElementById("all-container");

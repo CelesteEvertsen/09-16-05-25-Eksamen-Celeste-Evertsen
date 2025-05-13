@@ -22,5 +22,5 @@ if(matchUser){
     console.log("ikke Vellykket")
 }
 
-console.log("knappen er trykket")
+
 })

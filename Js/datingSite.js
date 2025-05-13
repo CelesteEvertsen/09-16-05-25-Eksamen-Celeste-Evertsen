@@ -212,8 +212,10 @@ likeCounteContainer.appendChild(likeCounterText);
 } 
 
 // Dato og tid tillegg funkjsonalitet
+// https://stackoverflow.com/questions/3552461/how-do-i-format-a-date-in-javascript 
+// og https://www.w3schools.com/js/js_date_formats.asp
 function showTimeAndDate(){
-  const date = new Date();
+  const date = new Date(); 
   const timeDateContainer = document.getElementById("date-time");
   const timeOptions = date.toLocaleString("no-NO",{
     weekday: "long",
