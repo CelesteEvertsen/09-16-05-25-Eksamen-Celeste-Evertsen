@@ -95,7 +95,7 @@ test("returnerer lagerde likte bruker hvis de finnes i localStorage", ()=>{
    localStorage.setItem("likedUsersFemale", JSON.stringify(mockUsers));
    const likedUsers = JSON.parse(localStorage.getItem("likedUsersFemale")) || [];
 
-    expect(likedUsers).toEqual(mockUsers);
+    expect(likedUsers).toEqual(mockUsers); 
     expect(likedUsers.length).toBe(2);
     expect(likedUsers[0].name.first).toBe("Henni");
     expect(likedUsers[1].name.first).toBe("Kari");

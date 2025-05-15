@@ -206,7 +206,7 @@ export function displayFemaleUsers(users) {
 }
 
 
-
+// tilleggs funksjonalitet, teller antall likes
 export function likecounter(){
 const likeCounteContainer = document.getElementById("like-counter-container");
 likeCounteContainer.innerHTML = ""; 
