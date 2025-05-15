@@ -143,3 +143,9 @@ test("Når kanppen trykkes, lagres likte bruker i localStorage", async()=>{
 
 
 });
+
+// Kilder:
+// https://www.testim.io/blog/dom-testing/
+//https://jestjs.io/docs/getting-started
+//https://github.com/jsdom/jsdom
+//moodle

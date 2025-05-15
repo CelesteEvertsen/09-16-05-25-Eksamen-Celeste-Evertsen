@@ -55,9 +55,55 @@ test("Lenken som for 'Allerde bruker?' sender til riktig html",()=>{
     expect(link.getAttribute("href")).toBe("/signIn.html");
 })
 
+test("Viser feilmelding om inputfeltene er tomme",()=>{
+    const userNameInput = document.querySelector("#username");
+    const passwordInput = document.querySelector("#pwd");
+    const registerBtn = document.querySelector("#register");
+    const registerUser = document.querySelector("#register-container")
 
+    userNameInput.value = "";
+    passwordInput.value = "";
+
+    registerBtn.click();
+    expect(registerUser.innerHTML).toBe('');
+})
+
+test("Tømmer inputfeltet etter bruker er registrert", async()=>{
+    const userNameInput = document.querySelector("#username");
+    const passwordInput = document.querySelector("#pwd");
+    const registerBtn = document.querySelector("#register");
+    const registerUser = document.querySelector("#register-container")
+
+    userNameInput.value = "Brukernavn";
+    passwordInput.value = "Passord123";
+
+    registerBtn.addEventListener("click", async (e)=>{
+        e.preventDefault();
+        
+    if(!userNameInput.value.trim() || !passwordInput.value.trim()){
+        registerUser.innerHTML = '<p style="color:red;">Fyll inn alle feltene før du registrerer deg.</p>';
+        return;
+    };
+
+     const loginData = {
+        userName: userNameInput.value.trim(),
+        password: passwordInput.value.trim(),
+    };
+  
+    userNameInput.value = "";
+    passwordInput.value = "";
+    })
+
+      await registerBtn.click();
+      expect(userNameInput.value).toBe("");
+      expect(passwordInput.value).toBe("");
+    
+      
+})
 });
 
 // Kilder:
 // https://www.testim.io/blog/dom-testing/
-//https://jestjs.io/docs/tutorial-jquery
+//https://jestjs.io/docs/getting-started
+//https://github.com/jsdom/jsdom
+//moodle
