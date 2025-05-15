@@ -57,3 +57,7 @@ test("Lenken som for 'Allerde bruker?' sender til riktig html",()=>{
 
 
 });
+
+// Kilder:
+// https://www.testim.io/blog/dom-testing/
+//https://jestjs.io/docs/tutorial-jquery

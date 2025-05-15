@@ -81,57 +81,6 @@ export function updateButtons() {
 
 const getFromLocalStorge = JSON.parse(localStorage.getItem("likedUsersFemale")) || [];
 
- function femaleFromLocal(localUser) {
-  const likeContainer = document.getElementById("female-liked-container");
-  likeContainer.innerHTML = "";
-
-  localUser.forEach((local, index) => {
-    const userCard = document.createElement("div");
-    userCard.classList.add("user-card");
-
-    userCard.style.border = "1px solid #ccc";
-    userCard.style.padding = "1rem";
-    userCard.style.marginBottom = "1rem";
-    userCard.style.borderRadius = "10px";
-    userCard.style.background = "lightpink";
-
-    userCard.innerHTML = `
-            <img src="${local.picture.large}">
-            <h2> ${local.name.title} ${local.name.first}, 
-            ${local.name.last} </h2>
-            <p>Alder: ${local.dob.age} Kjønn: ${local.gender}</p>
-            <p>By: ${local.location.city}</p>
-            <p>Land: ${local.location.country}</p>
-            
-            `;
-    const dislikeBtn = document.createElement("button");
-    dislikeBtn.textContent = "Dislike";
-    dislikeBtn.style.marginTop = "10px";
-    dislikeBtn.style.backgroundColor = "#f44336";
-    dislikeBtn.style.color = "white";
-    dislikeBtn.style.border = "none";
-    dislikeBtn.style.padding = "0.5rem 1rem";
-    dislikeBtn.style.borderRadius = "5px";
-
-    dislikeBtn.addEventListener("click", () => {
-      const currentData = JSON.parse(localStorage.getItem("likedUsersFemale")) || [];
-      currentData.splice(index, 1);
-      localStorage.setItem("likedUsersFemale", JSON.stringify(currentData));
-
-      if (counter > 0) {
-        counter--;
-        localStorage.setItem("likeCounter", counter);
-      }
-      likedUsers = currentData;
-      femaleFromLocal(currentData); 
-      updateButtons();
-      deleteFemaleLikedUsers(local);
-    });
-    userCard.append(dislikeBtn);
-    likeContainer.append(userCard);
-  });
-}
-
 // Vise Kvinner
 
 export function displayFemaleUsers(users) {
@@ -202,6 +151,61 @@ export function displayFemaleUsers(users) {
     femaleBtn.textContent = "Kvinne";
   });
 }
+
+
+
+ function femaleFromLocal(localUser) {
+  const likeContainer = document.getElementById("female-liked-container");
+  likeContainer.innerHTML = "";
+
+  localUser.forEach((local, index) => {
+    const userCard = document.createElement("div");
+    userCard.classList.add("user-card");
+
+    userCard.style.border = "1px solid #ccc";
+    userCard.style.padding = "1rem";
+    userCard.style.marginBottom = "1rem";
+    userCard.style.borderRadius = "10px";
+    userCard.style.background = "lightpink";
+
+    userCard.innerHTML = `
+            <img src="${local.picture.large}">
+            <h2> ${local.name.first}, 
+            ${local.name.last} </h2>
+            <p>Alder: ${local.dob.age} Kjønn: ${local.gender}</p>
+            <p>By: ${local.location.city}</p>
+            <p>Land: ${local.location.country}</p>
+            
+            `;
+    const dislikeBtn = document.createElement("button");
+    dislikeBtn.textContent = "Dislike";
+    dislikeBtn.style.marginTop = "10px";
+    dislikeBtn.style.backgroundColor = "#f44336";
+    dislikeBtn.style.color = "white";
+    dislikeBtn.style.border = "none";
+    dislikeBtn.style.padding = "0.5rem 1rem";
+    dislikeBtn.style.borderRadius = "5px";
+
+    dislikeBtn.addEventListener("click", () => {
+      const currentData = JSON.parse(localStorage.getItem("likedUsersFemale")) || [];
+      currentData.splice(index, 1);
+      localStorage.setItem("likedUsersFemale", JSON.stringify(currentData));
+
+      if (counter > 0) {
+        counter--;
+        localStorage.setItem("likeCounter", counter);
+      }
+      likedUsers = currentData;
+      femaleFromLocal(currentData); 
+      updateButtons();
+      deleteFemaleLikedUsers(local);
+    });
+    userCard.append(dislikeBtn);
+    likeContainer.append(userCard);
+  });
+}
+
+
 
 export function likecounter(){
 const likeCounteContainer = document.getElementById("like-counter-container");

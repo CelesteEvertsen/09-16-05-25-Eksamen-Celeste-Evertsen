@@ -6,3 +6,4 @@ const config = {
 };
 
 module.exports = config;
+// dette er test miljøet som brukes --> JSDOM

@@ -31,3 +31,6 @@ export async function postFemaleLikedUsers(request){
         console.error("Error posting data",  error.message.status);
     }
 }
+// spred operator gjør koden kortere, vet at ..request 
+// henter all info jeg vil post å bruker _id for å legge til slik at jeg kan bruke det senere i local
+// å bruke det for å  slette senere.

@@ -36,58 +36,6 @@ document.addEventListener("DOMContentLoaded", async ()=> {
     
 const getFromLocalStorge = JSON.parse(localStorage.getItem("allLikedUsers")) || [];
 
- function allUsersFromLocal(localUser) {
-  const allLikedContainer = document.getElementById("all-liked-container");
-  allLikedContainer.innerHTML = "";
-
-  localUser.forEach((local, index) => {
-    const userCard = document.createElement("div");
-    userCard.classList.add("all-user-card");
-
-    userCard.style.border = "1px solid #ccc";
-    userCard.style.padding = "1rem";
-    userCard.style.marginBottom = "1rem";
-    userCard.style.borderRadius = "10px";
-    userCard.style.background = "lightgreen";
-
-    userCard.innerHTML = `
-            <img src="${local.picture.large}">
-            <h2> ${local.name.title} ${local.name.first}, 
-            ${local.name.last} </h2>
-            <p>Alder: ${local.dob.age} Kjønn: ${local.gender}</p>
-            <p>By: ${local.location.city}</p>
-            <p>Land: ${local.location.country}</p>
-            
-            `;
-    const dislikeBtn = document.createElement("button");
-    dislikeBtn.textContent = "Dislike";
-    dislikeBtn.style.marginTop = "10px";
-    dislikeBtn.style.backgroundColor = "#f44336";
-    dislikeBtn.style.color = "white";
-    dislikeBtn.style.border = "none";
-    dislikeBtn.style.padding = "0.5rem 1rem";
-    dislikeBtn.style.borderRadius = "5px";
-
-    dislikeBtn.addEventListener("click", () => {
-      const currentData = JSON.parse(localStorage.getItem("allLikedUsers")) || [];
-      currentData.splice(index, 1);
-      localStorage.setItem("allLikedUsers", JSON.stringify(currentData));
-
-      if (counter > 0) {
-        counter--;
-        localStorage.setItem("likeCounter", counter);
-      }
-      likedUsers = currentData;
-      allUsersFromLocal(currentData); 
-      updateButtons();
-      deleteLikedUsers(local);
-      
-    });
-    userCard.append(dislikeBtn);
-    allLikedContainer.append(userCard);
-  });
-}
-
 // Viser brukere
 
 export function displayAllUsers(users) {
@@ -159,6 +107,60 @@ export function displayAllUsers(users) {
     allUsersBtn.textContent = "Alle";
   });
 }
+
+ function allUsersFromLocal(localUser) {
+  const allLikedContainer = document.getElementById("all-liked-container");
+  allLikedContainer.innerHTML = "";
+
+  localUser.forEach((local, index) => {
+    const userCard = document.createElement("div");
+    userCard.classList.add("all-user-card");
+
+    userCard.style.border = "1px solid #ccc";
+    userCard.style.padding = "1rem";
+    userCard.style.marginBottom = "1rem";
+    userCard.style.borderRadius = "10px";
+    userCard.style.background = "lightgreen";
+
+    userCard.innerHTML = `
+            <img src="${local.picture.large}">
+            <h2> ${local.name.title} ${local.name.first}, 
+            ${local.name.last} </h2>
+            <p>Alder: ${local.dob.age} Kjønn: ${local.gender}</p>
+            <p>By: ${local.location.city}</p>
+            <p>Land: ${local.location.country}</p>
+            
+            `;
+    const dislikeBtn = document.createElement("button");
+    dislikeBtn.textContent = "Dislike";
+    dislikeBtn.style.marginTop = "10px";
+    dislikeBtn.style.backgroundColor = "#f44336";
+    dislikeBtn.style.color = "white";
+    dislikeBtn.style.border = "none";
+    dislikeBtn.style.padding = "0.5rem 1rem";
+    dislikeBtn.style.borderRadius = "5px";
+
+    dislikeBtn.addEventListener("click", () => {
+      const currentData = JSON.parse(localStorage.getItem("allLikedUsers")) || [];
+      currentData.splice(index, 1);
+      localStorage.setItem("allLikedUsers", JSON.stringify(currentData));
+
+      if (counter > 0) {
+        counter--;
+        localStorage.setItem("likeCounter", counter);
+      }
+      likedUsers = currentData;
+      allUsersFromLocal(currentData); 
+      updateButtons();
+      deleteLikedUsers(local);
+      
+    });
+    userCard.append(dislikeBtn);
+    allLikedContainer.append(userCard);
+  });
+}
+
+
 allUsersFromLocal(getFromLocalStorge);
 updateButtons();
 likecounter();

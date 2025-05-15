@@ -18,57 +18,7 @@ function updateButtons() {
 // Funksjon displaye fra localStorage til Browser.
 const getFromStorage = JSON.parse(localStorage.getItem("likedUsersMale")) || [];
 
-function displayFromLocalStorage(maleFromLocal) {
-  const likedContainer = document.getElementById("male-liked-container");
-  likedContainer.innerHTML = "";
 
-  maleFromLocal.forEach((maleUsers, index) => {
-    const maleCard = document.createElement("div");
-    maleCard.classList.add("male-user-card");
-
-    maleCard.style.border = "1px solid #ccc";
-    maleCard.style.padding = "1rem";
-    maleCard.style.marginBottom = "1rem";
-    maleCard.style.borderRadius = "10px";
-    maleCard.style.background = "lightgrey";
-
-    maleCard.innerHTML = `
-      <img src="${maleUsers.picture.large}">
-        <h2> ${maleUsers.name.title} ${maleUsers.name.first}, 
-        ${maleUsers.name.last} </h2>
-        <p>Alder: ${maleUsers.dob.age} Kjønn: ${maleUsers.gender}</p>
-        <p>By: ${maleUsers.location.city}</p>
-        <p>Land: ${maleUsers.location.country}</p>
-    `;
-
-    const maledislikeBtn = document.createElement("button");
-    maledislikeBtn.textContent = "Dislike";
-    maledislikeBtn.style.marginTop = "10px";
-    maledislikeBtn.style.backgroundColor = "#f44336";
-    maledislikeBtn.style.color = "white";
-    maledislikeBtn.style.border = "none";
-    maledislikeBtn.style.padding = "0.5rem 1rem";
-    maledislikeBtn.style.borderRadius = "5px";
-
-    maledislikeBtn.addEventListener("click", () => {
-      const currentData =
-        JSON.parse(localStorage.getItem("likedUsersMale")) || [];
-      currentData.splice(index, 1);
-      localStorage.setItem("likedUsersMale", JSON.stringify(currentData));
-
-      if (counter > 0) {
-        counter--;
-        localStorage.setItem("likeCounter", counter);
-      }
-      likedUsers = currentData; 
-      displayFromLocalStorage(currentData);
-      updateButtons();
-      deleteLikedMale(maleUsers);
-    });
-    maleCard.append(maledislikeBtn);
-    likedContainer.append(maleCard);
-  });
-}
 
 // Lager en Funksjon som viser MaleUser i NettLeseren
 export function displayMaleUsers(users, bgColor) {
@@ -139,6 +89,59 @@ export function displayMaleUsers(users, bgColor) {
     MaleBtn.textContent = "Menn";
   });
    
+}
+
+
+function displayFromLocalStorage(maleFromLocal) {
+  const likedContainer = document.getElementById("male-liked-container");
+  likedContainer.innerHTML = "";
+
+  maleFromLocal.forEach((maleUsers, index) => {
+    const maleCard = document.createElement("div");
+    maleCard.classList.add("male-user-card");
+
+    maleCard.style.border = "1px solid #ccc";
+    maleCard.style.padding = "1rem";
+    maleCard.style.marginBottom = "1rem";
+    maleCard.style.borderRadius = "10px";
+    maleCard.style.background = "lightgrey";
+
+    maleCard.innerHTML = `
+      <img src="${maleUsers.picture.large}">
+        <h2> ${maleUsers.name.title} ${maleUsers.name.first}, 
+        ${maleUsers.name.last} </h2>
+        <p>Alder: ${maleUsers.dob.age} Kjønn: ${maleUsers.gender}</p>
+        <p>By: ${maleUsers.location.city}</p>
+        <p>Land: ${maleUsers.location.country}</p>
+    `;
+
+    const maledislikeBtn = document.createElement("button");
+    maledislikeBtn.textContent = "Dislike";
+    maledislikeBtn.style.marginTop = "10px";
+    maledislikeBtn.style.backgroundColor = "#f44336";
+    maledislikeBtn.style.color = "white";
+    maledislikeBtn.style.border = "none";
+    maledislikeBtn.style.padding = "0.5rem 1rem";
+    maledislikeBtn.style.borderRadius = "5px";
+
+    maledislikeBtn.addEventListener("click", () => {
+      const currentData =
+        JSON.parse(localStorage.getItem("likedUsersMale")) || [];
+      currentData.splice(index, 1);
+      localStorage.setItem("likedUsersMale", JSON.stringify(currentData));
+
+      if (counter > 0) {
+        counter--;
+        localStorage.setItem("likeCounter", counter);
+      }
+      likedUsers = currentData; 
+      displayFromLocalStorage(currentData);
+      updateButtons();
+      deleteLikedMale(maleUsers);
+    });
+    maleCard.append(maledislikeBtn);
+    likedContainer.append(maleCard);
+  });
 }
 
 displayFromLocalStorage(getFromStorage);

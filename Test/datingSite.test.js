@@ -75,6 +75,26 @@ test("sjekker at #edit og #logout finnes i DOM", ()=>{
     expect (editBtn).not.toBeNull();
     expect (logoutBtn).not.toBeNull();
 
-})
+});
+ // tester LOCALSTORAGE
+test("returnerer en tom array hvis localStorage er tom", () => {
+    const likedUsers = JSON.parse(localStorage.getItem("likedUsersFemale")) || [];
+    expect(likedUsers).toEqual([]);
+    expect(likedUsers.length).toBe(0);
+});
+
+test("returnerer lagerde likte bruker hvis de finnes i localStorage", ()=>{
+    const mockUsers = [
+        {name:{first:"Henni", last:"Norddame"},gender: "female"},
+        {name:{first:"Kari", last:"Hansen"},gender: "female"},
+    ];
+   localStorage.setItem("likedUsersFemale", JSON.stringify(mockUsers));
+   const likedUsers = JSON.parse(localStorage.getItem("likedUsersFemale")) || [];
+
+    expect(likedUsers).toEqual(mockUsers);
+    expect(likedUsers.length).toBe(2);
+    expect(likedUsers[0].name.first).toBe("Henni");
+    expect(likedUsers[1].name.first).toBe("Kari");
+});
 
 });
