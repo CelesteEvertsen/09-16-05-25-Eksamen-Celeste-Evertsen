@@ -19,6 +19,7 @@ beforeEach(() => {
     document = dom.window.document;
     global.document = document; 
     global.window = dom.window; 
+    
  // simulerer knapp fra datingsite.js
  const likeBtn = document.createElement("button");
  likeBtn.id = "likeBtn";
@@ -109,6 +110,7 @@ test("Når kanppen trykkes, lagres likte bruker i localStorage", async()=>{
     const maxLike = 10;
     let likeUsers = [];
 
+    //simulerer hvordan det lagres i localStorage
     const mockUser = {
         name:{first:"Henni", last:"Norddame"},gender: "female",
     }
