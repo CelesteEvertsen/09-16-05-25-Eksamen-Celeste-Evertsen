@@ -19,7 +19,10 @@ beforeEach(() => {
     document = dom.window.document;
     global.document = document; 
     global.window = dom.window; 
-
+ // simulerer knapp fra datingsite.js
+ const likeBtn = document.createElement("button");
+ likeBtn.id = "likeBtn";
+ document.body.appendChild(likeBtn);
 
 });
 test("Sjekker at knappene for filtrering finnes",()=>{
@@ -96,5 +99,47 @@ test("returnerer lagerde likte bruker hvis de finnes i localStorage", ()=>{
     expect(likedUsers[0].name.first).toBe("Henni");
     expect(likedUsers[1].name.first).toBe("Kari");
 });
+
+test("Når kanppen trykkes, lagres likte bruker i localStorage", async()=>{
+    const likeBtn = document.querySelector("#likeBtn");
+    expect(likeBtn).not.toBeNull();
+
+    // Simulerer verdier for likte brukere
+    let counter = 0;
+    const maxLike = 10;
+    let likeUsers = [];
+
+    const mockUser = {
+        name:{first:"Henni", last:"Norddame"},gender: "female",
+    }
+
+    // lager en mock funkjson av postFemaleLikedUsers sidne den er async. 
+    // Slik at jeg kan bruke den i testen
+    const postFemaleLikedUsers = jest.fn().mockResolvedValue(mockUser);
+
+    likeBtn.addEventListener("click", async()=>{
+        if(counter < maxLike){
+            counter++;
+            const saveUser = await postFemaleLikedUsers();
+            likeUsers.push(saveUser);
+            localStorage.setItem("likedUsersFemale",JSON.stringify(likeUsers));
+            localStorage.setItem("likeCounter",counter);
+
+        }else if(counter === maxLike){
+            alert('Du har ingen flere likes ${maxlike}');
+
+        }
+
+    })
+    await likeBtn.click();
+
+    const storedFemale = JSON.parse(localStorage.getItem("likedUsersFemale"));
+    expect(storedFemale.length).toBe(1);
+    expect(storedFemale[0].name.first).toBe("Henni");
+
+    expect(localStorage.getItem("likeCounter")).toBe("1");
+
+});
+
 
 });
