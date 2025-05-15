@@ -85,11 +85,7 @@ test("Tømmer inputfeltet etter bruker er registrert", async()=>{
         return;
     };
 
-     const loginData = {
-        userName: userNameInput.value.trim(),
-        password: passwordInput.value.trim(),
-    };
-  
+
     userNameInput.value = "";
     passwordInput.value = "";
     })
